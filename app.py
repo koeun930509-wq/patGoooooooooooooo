@@ -1,4 +1,4 @@
-"""PetGo — 반려동물 동반 여행 가이드 MVP 엔트리포인트."""
+"""PatGo — 반려동물 동반 여행 가이드 MVP 엔트리포인트."""
 
 import base64
 from pathlib import Path
@@ -11,7 +11,7 @@ import streamlit as st
 
 from pet_guide.ui import detail_screen, explore_screen, profile_screen
 
-st.set_page_config(page_title="PetGo · 반려동물 동반 여행 가이드", page_icon="puppyCat.png", layout="centered")
+st.set_page_config(page_title="PatGo · 반려동물 동반 여행 가이드", page_icon="puppyCat.png", layout="centered")
 
 _DEFAULTS = {
     "pets": [],
@@ -42,7 +42,7 @@ st.markdown(
     f'display: flex; flex-direction: column; align-items: center; justify-content: center; '
     f'text-align: center; color: #fff; padding: 1rem; '
     f'text-shadow: 0 1px 6px rgba(0, 0, 0, 0.85);">'
-    f'<div style="font-size: 2rem; font-weight: 700;">🐾 PetGo</div>'
+    f'<div style="font-size: 2rem; font-weight: 700;">🐾 PatGo</div>'
     f'<div style="font-size: 0.95rem; margin-top: 0.25rem;">'
     f'반려동물 특성과 장소 규정을 대조해 헛걸음을 없애는 여행 가이드'
     f'</div>'
