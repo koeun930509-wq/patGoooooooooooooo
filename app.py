@@ -1,5 +1,8 @@
 """PetGo — 반려동물 동반 여행 가이드 MVP 엔트리포인트."""
 
+import base64
+from pathlib import Path
+
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -26,15 +29,29 @@ st.markdown(
     "<style>.block-container { padding-top: 2rem; }</style>",
     unsafe_allow_html=True,
 )
-st.markdown("<h1 style='text-align: center; margin-top: 0;'>🐾 PetGo</h1>", unsafe_allow_html=True)
+
+_banner_b64 = base64.b64encode(Path("topImage.jpg").read_bytes()).decode()
 st.markdown(
-    "<p style='text-align: center; color: gray;'>반려동물 특성과 장소 규정을 대조해 헛걸음을 없애는 여행 가이드</p>",
+    f'<div style="position: relative; width: 100vw; margin-left: calc(-50vw + 50%); '
+    f'margin-right: calc(-50vw + 50%); height: 260px; overflow: hidden; '
+    f'background-image: url(\'data:image/jpeg;base64,{_banner_b64}\'); '
+    f'background-size: cover; background-position: center;">'
+    f'<div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; '
+    f'background: rgba(0, 0, 0, 0.15); z-index: 1;"></div>'
+    f'<div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2; '
+    f'display: flex; flex-direction: column; align-items: center; justify-content: center; '
+    f'text-align: center; color: #fff; padding: 1rem; '
+    f'text-shadow: 0 1px 6px rgba(0, 0, 0, 0.85);">'
+    f'<div style="font-size: 2rem; font-weight: 700;">🐾 PetGo</div>'
+    f'<div style="font-size: 0.95rem; margin-top: 0.25rem;">'
+    f'반려동물 특성과 장소 규정을 대조해 헛걸음을 없애는 여행 가이드'
+    f'</div>'
+    f'</div>'
+    f'</div>',
     unsafe_allow_html=True,
 )
 
-_, banner_col, _ = st.columns([1, 3, 1])
-with banner_col:
-    st.image("puppyCat.png", width="stretch")
+st.markdown("<div style='margin-top: 35px;'></div>", unsafe_allow_html=True)
 
 _STEPS = [("프로필", "①"), ("탐색", "②"), ("판정 상세", "③")]
 step_cols = st.columns([3, 1, 3, 1, 3], vertical_alignment="center")
@@ -63,7 +80,7 @@ elif nav == "탐색":
 elif nav == "판정 상세":
     detail_screen.render()
 
-st.divider()
+st.markdown("<div style='margin-top: 1rem;'></div>", unsafe_allow_html=True)
 prev_col, _, next_col = st.columns([1, 2, 1])
 with prev_col:
     if current_idx > 0 and st.button("← 이전", key="btn_prev", width="stretch"):

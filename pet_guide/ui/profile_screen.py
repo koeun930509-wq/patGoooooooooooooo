@@ -46,29 +46,24 @@ def render():
                 )
                 st.success(f"{name} 등록 완료")
 
-    st.divider()
-
     if not st.session_state.pets:
         st.info("등록된 반려동물이 없습니다. 위에서 먼저 추가해주세요.")
         return
 
     st.subheader("등록된 반려동물 · 동반 대상 선택")
     for idx, pet in enumerate(st.session_state.pets):
-        cols = st.columns([0.08, 0.72, 0.2])
+        cols = st.columns([8, 1.3], vertical_alignment="center")
         with cols[0]:
             checked = idx in st.session_state.companion_indices
-            new_checked = st.checkbox(
-                "동반 대상", value=checked, key=f"companion_{idx}", label_visibility="collapsed"
-            )
+            badge = "🐕 맹견" if pet.is_dangerous_breed else "🐕"
+            label = f"**{pet.name}** ({pet.breed or pet.species}, {pet.weight_kg}kg, {pet.size}) {badge}"
+            new_checked = st.checkbox(label, value=checked, key=f"companion_{idx}")
             if new_checked:
                 st.session_state.companion_indices.add(idx)
             else:
                 st.session_state.companion_indices.discard(idx)
         with cols[1]:
-            badge = "🐕 맹견" if pet.is_dangerous_breed else "🐕"
-            st.markdown(f"**{pet.name}** ({pet.breed or pet.species}, {pet.weight_kg}kg, {pet.size}) {badge}")
-        with cols[2]:
-            if st.button("삭제", key=f"delete_{idx}"):
+            if st.button("삭제", key=f"delete_{idx}", width="stretch"):
                 st.session_state.pets.pop(idx)
                 st.session_state.companion_indices.discard(idx)
                 st.rerun()
